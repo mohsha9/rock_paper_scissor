@@ -1,16 +1,18 @@
-
+// object for store Icons
 let icon = {
   rock: '&#9994;',
   paper: '&#9995;',
   scissor: '&#9996;'
 };
 
+// Reset score 
 document.querySelector('.js-score-button')
   .addEventListener('click', () => {
     scoreReset();
     localStorage.removeItem('score');
   });
 
+// reset score func and css alteration
 function scoreReset() {
   document.getElementById("win_score").innerHTML = score.wins = 0;
   document.getElementById("lose_score").innerHTML = score.losses = 0;
@@ -22,6 +24,7 @@ function scoreReset() {
   document.getElementById("computer-icon").style.animation = "clashHand2 0.4s ease-in-out infinite";
 };
 
+// Store score more permanently using localstorage
 let score = JSON.parse(localStorage.getItem('score')) || {
   wins: 0,
   losses: 0,
