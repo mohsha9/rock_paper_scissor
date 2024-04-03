@@ -4,6 +4,7 @@ body {
   flex-direction: column;
   height: 100%;
   width: 100%;
+  margin-top: 25px;
   font-family: 'Handjet', cursive;
   font-weight: 700;
 }
@@ -12,7 +13,8 @@ body {
   display: flex;
   flex-direction: column;
   width: 380px;
-  border: 10px solid #ffae00;
+  border: 15px solid #ffba1a;
+  background-color: #fff7e5;
   padding: 15px 0px 10px 0px;
   border-radius: 20px;
 }
@@ -30,11 +32,14 @@ body {
 .rock-button,
 .paper-button,
 .scissor-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100px;
   height: 100px;
   border-radius: 30px;
-  background-color: #ffecb8;
-  box-shadow: 1px 2px 7px #adadad;
+  background-color: #c7b8ff;
+  box-shadow: 1px 2px 7px #cccccc;
   border: none;
   padding: 0px;
   cursor: grabbing;
@@ -43,28 +48,26 @@ body {
 .rock-button:active,
 .paper-button:active,
 .scissor-button:active {
-  box-shadow: 1px 2px 7px #ffbb00;
+  box-shadow: 0px 0px 7px #3700ff;
 }
 
 .rock-icon,
 .paper-icon,
 .scissor-icon {
-  align-self: center;
   font-size: 60px;
+  transition: all ease .1s;
 }
 
 .rock-button:hover .rock-icon,
 .paper-button:hover .paper-icon,
 .scissor-button:hover .scissor-icon {
   font-size: 65px;
-  transition: .1s;
-  padding: 0px;
 }
 
 .rock-button-section:hover,
 .paper-button-section:hover,
 .scissor-button-section:hover {
-  animation: waving-icon 0.15s infinite ease-in-out alternate;
+  animation: waving-icon infinite ease-in-out alternate 0.15s;
 }
 
 @keyframes waving-icon {
@@ -105,29 +108,11 @@ body {
   font-size: 30px;
   cursor: pointer;
   padding-left: 7px;
-  text-shadow: 1px 3px 3px #d4d4d4;
+  text-shadow: 0px 2px 5px #c2c2c2;
   z-index: 5;
   animation: none;
+  transition: all ease .15s;
 }
-
-/* 
-@keyframes quickShake {
-  0% {
-    transform: rotate(-10deg);
-    font-size: 30px;
-  }
-
-  50% {
-    transform: rotate(10deg);
-    font-size: 40px;
-    margin: 0px 0px 10px 0px;
-  }
-
-  100% {
-    transform: rotate(-10deg);
-    font-size: 30px;
-  }
-} */
 
 .win-icon:hover,
 .lose-icon:hover,
@@ -135,7 +120,6 @@ body {
   padding-left: 18px;
   text-shadow: none;
   font-size: 35px;
-  transition: .15s;
   animation: shake-icon .8s ease-in-out infinite;
 }
 
@@ -180,13 +164,13 @@ body {
   height: 50px;
   border-radius: 25px;
   font-size: 30px;
-  box-shadow: 1px 2px 5px #adadad;
+  box-shadow: 1px 2px 5px #c7c7c7;
 }
 
 #win_score,
 #lose_score,
 #tie_score {
-  background-color: #5c6fff;
+  background-color: #475dff;
 }
 
 .compare-section {
@@ -195,7 +179,9 @@ body {
   align-items: center;
   height: 90px;
   gap: 10px;
-  background-color: #f5f5f5;
+  border-top: 1px solid #ffae00;
+  border-bottom: 1px solid #ffae00;
+  background-color: #ffffff;
 }
 
 .user-section {
@@ -249,7 +235,7 @@ body {
   padding-bottom: 10px;
   font-size: 60px;
   transform: rotate(25deg) scaleX(-1);
-  animation: clashHand 0.4s ease-in-out infinite;
+  animation: clashHand 0.3s ease infinite;
 }
 
 @keyframes clashHand {
@@ -273,7 +259,7 @@ body {
   padding-bottom: 10px;
   font-size: 60px;
   transform: rotate(-25deg);
-  animation: clashHand2 0.4s ease-in-out infinite;
+  animation: clashHand2 0.3s ease-in-out infinite;
 }
 
 @keyframes clashHand2 {
@@ -304,7 +290,7 @@ body {
   cursor: pointer;
 }
 
-.score-button:hover .reset-icon {
+.score-reset-button:hover .reset-icon {
   font-size: 33px;
   transition: 0.1s;
   animation: warm-wave 1s ease-in-out infinite;
@@ -324,24 +310,24 @@ body {
   }
 }
 
-.score-button {
+.score-reset-button {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 70px;
   height: 70px;
-  border: none;
-  background-color: #8fabff;
+  border: 5px solid #c7b8ff;
+  background-color: #475dff;
   border-radius: 100%;
   box-shadow: 1px 2px 5px #d6d6d6;
 }
 
-.score-button:active {
-  box-shadow: 1px 2px 5px #7a9cff;
+.score-reset-button:active {
+  box-shadow: 0px 0px 5px #245bff;
 
 }
 
-.score-button:active .reset-icon {
+.score-reset-button:active .reset-icon {
   animation: spine-icon 0.22s alternate;
 }
 
