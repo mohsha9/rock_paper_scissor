@@ -1,121 +1,96 @@
-// object for store Icons
-let icon = {
-  rock: '&#9994;',
-  paper: '&#9995;',
-  scissor: '&#9996;'
-};
+const winScore = document.getElementById("win_score");
+const loseScore = document.getElementById("lose_score");
+const tieScore = document.getElementById("tie_score");
+const userIcon = document.getElementById("user-icon");
+const computerIcon = document.getElementById("computer-icon");
+const resultSec = document.getElementById("result-section");
 
-// Reset score 
-document.querySelector('.js-score-button')
-  .addEventListener('click', () => {
-    scoreReset();
-    localStorage.removeItem('score');
-  });
-
-// reset score func and css alteration
-function scoreReset() {
-  document.getElementById("win_score").innerHTML = score.wins = 0;
-  document.getElementById("lose_score").innerHTML = score.losses = 0;
-  document.getElementById("tie_score").innerHTML = score.ties = 0;
-  document.getElementById("result-section").innerHTML = 'v/s';
-  document.getElementById("user-icon").innerHTML = icon.rock;
-  document.getElementById("computer-icon").innerHTML = icon.rock;
-  document.getElementById("user-icon").style.animation = "clashHand 0.4s ease-in-out infinite";
-  document.getElementById("computer-icon").style.animation = "clashHand2 0.4s ease-in-out infinite";
-};
-
-// Store score more permanently using localstorage
+// Get score from localStorage or from default value.
 let score = JSON.parse(localStorage.getItem('score')) || {
   wins: 0,
   losses: 0,
   ties: 0
 };
 
-document.querySelector('.js-rock-button-section')
+let icon = {
+  rock: '&#9994;',
+  paper: '&#9995;',
+  scissor: '&#9996;'
+};
+
+// Add event click to reset button and run scoreReset function.
+document.querySelector('.js-score-reset-button')
+  .addEventListener('click', () => {
+    scoreReset();
+  });
+
+// Add event click to 'rock, paper, scissor' button. 
+document.querySelector('.js-rock-button')
   .addEventListener('click', () => {
     playGame('rock');
   });
-document.querySelector('.js-paper-button-section')
- .addEventListener('click', () => {
+document.querySelector('.js-paper-button')
+  .addEventListener('click', () => {
     playGame('paper');
   });
-document.querySelector('.js-scissor-button-section')
- .addEventListener('click', () => {
+document.querySelector('.js-scissor-button')
+  .addEventListener('click', () => {
     playGame('scissor');
   });
 
+// Create a function playGame and compare playerMover and computerMove to get the result.
 function playGame(playerMove) {
   const computerMove = pickComputerMove();
 
   let result = '';
 
+// Get result to compare playerMove and computerMove. 
   if (playerMove === 'rock') {
-    document.getElementById("user-icon").innerHTML = icon.rock;
-    if (computerMove === 'rock') {
-      result = 'tie';
-    } else if (computerMove === 'paper') {
-      result = 'you lose';
-    } else if (computerMove === 'scissor') {
-      result = 'you win';
-    }
+    userIcon.innerHTML = icon.rock;
+    computerMove === 'rock' ? result = 'tie'
+      : computerMove === 'paper' ? result = 'you lose'
+        : result = 'you win';
   } else if (playerMove === 'paper') {
-    document.getElementById("user-icon").innerHTML = icon.paper;
-    if (computerMove === 'paper') {
-      result = 'tie';
-    } else if (computerMove === 'rock') {
-      result = 'you win';
-    } else if (computerMove === 'scissor') {
-      result = 'you lose'
-    }
-  } else if (playerMove === 'scissor') {
-    document.getElementById("user-icon").innerHTML = icon.scissor;
-    if (computerMove === 'scissor') {
-      result = 'tie';
-    } else if (computerMove === 'rock') {
-      result = 'you lose';
-    } else if (computerMove === 'paper') {
-      result = 'you win';
-    }
+    userIcon.innerHTML = icon.paper;
+    computerMove === 'paper' ? result = 'tie'
+      : computerMove === 'rock' ? result = 'you win'
+        : result = 'you lose';
+  } else {
+    userIcon.innerHTML = icon.scissor;
+    computerMove === 'scissor' ? result = 'tie'
+      : computerMove === 'rock' ? result = 'you lose'
+        : result = 'you win';
   }
 
-
-  if (result === 'you win') {
-    document.getElementById("win_score").innerHTML = score.wins = score.wins + 1;
-  } else if (result === 'you lose') {
-    document.getElementById("lose_score").innerHTML = score.losses = score.losses + 1;
-  } else if (result === 'tie') {
-    document.getElementById("tie_score").innerHTML = score.ties = score.ties + 1;
-  }
-
+  // Increase score on result. 
+  result === 'you win'
+    ? winScore.innerHTML = ++score.wins
+    : result === 'you lose'
+      ? loseScore.innerHTML = ++score.losses
+      : tieScore.innerHTML = ++score.ties;
+  
+// Set localStorage 
   localStorage.setItem('score', JSON.stringify(score));
 
-  if (result === 'you win' || 'you lose' || 'tie') {
-    document.getElementById("result-section").innerHTML = result.toUpperCase() + ' !';
-  }
+// Display result.
+  result === 'you win' || 'you lose' || 'tie'
+    ? resultSec.innerHTML = result.toUpperCase() + ' !' : '';
+  
+// Set hand animation to 'none' after game on. 
+  'rock' || 'paper' || 'scissor' === playerMove
+    ? userIcon.style.animation = "none" : '';
+};
 
-  if (computerMove === 'rock') {
-    document.getElementById("computer-icon").innerHTML = icon.rock;
-  } else if (computerMove === 'paper') {
-    document.getElementById("computer-icon").innerHTML = icon.paper;
-  } else if (computerMove === 'scissor') {
-    document.getElementById("computer-icon").innerHTML = icon.scissor;
-  }
+// Display score on re-render of the page. 
+function displayScore() {
+  winScore.innerHTML = score.wins;
+  loseScore.innerHTML = score.losses
+  tieScore.innerHTML = score.ties;
+};
+displayScore();
 
-  if ('paper' || 'rock' || 'scissor' === computerMove) {
-    document.getElementById("computer-icon").style.animation = "none";
-  }
-  if ('rock' || 'paper' || 'scissor' === playerMove) {
-    document.getElementById("user-icon").style.animation = "none";
-  }
-
-  // console.log(result);
-  // alert(`You choose ${playerMove}. Computer Choose ${computerMove}. ${result}.
-  // // ${score.wins} ${score.losses} ${score.ties}`)
-}
-
-
+// Set computer move using random number.
 function pickComputerMove() {
-
   const randomNumber = Math.random();
   let computerMove = '';
 
@@ -125,8 +100,33 @@ function pickComputerMove() {
   else if (randomNumber >= 1 / 3 && randomNumber < 2 / 3) {
     computerMove = 'paper';
   }
-  else if (randomNumber >= 2 / 3 && randomNumber < 1) {
+  else {
     computerMove = 'scissor';
   }
+
+// Set computer move icon based on its move.
+  computerMove === 'rock'
+    ? computerIcon.innerHTML = icon.rock
+    : computerMove === 'paper'
+      ? computerIcon.innerHTML = icon.paper
+      : computerIcon.innerHTML = icon.scissor;
+
+// Set hand animation to 'none' after game on.
+  'paper' || 'rock' || 'scissor' === computerMove
+    ? computerIcon.style.animation = "none" : '';
+
   return computerMove;
 }
+
+// Create a function to reset score, icon and animation;
+function scoreReset() {
+  localStorage.removeItem('score');
+  winScore.innerHTML = score.wins = 0;
+  loseScore.innerHTML = score.losses = 0;
+  tieScore.innerHTML = score.ties = 0;
+  resultSec.innerHTML = 'v/s';
+  userIcon.innerHTML = icon.rock;
+  computerIcon.innerHTML = icon.rock;
+  userIcon.style.animation = "clashHand 0.4s ease-in-out infinite";
+  computerIcon.style.animation = "clashHand2 0.4s ease-in-out infinite";
+};
